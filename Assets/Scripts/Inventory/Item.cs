@@ -15,12 +15,19 @@ public class Item {
     public enum ItemTypes
     {
         Weapon,
+        Usable,
         Consumable,
+        Chest,
+        Head,
+        Gloves,
+        Legs,
+        Shoes,
         Quest
     }
 
     public Item()
     {
+        ItemID = -1;
     }
 
     public Item(string name, int id, string desc, int power, int speed, ItemTypes type)
