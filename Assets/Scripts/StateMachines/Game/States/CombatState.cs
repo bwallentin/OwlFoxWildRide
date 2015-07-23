@@ -55,6 +55,7 @@ public class CombatState : IState
 
     public void OnEnter()
     {
+        Debug.Log("Enter combat");
         // We'll take the combat groups the game controller have collected,
         // adding them to our own list of combatants
         foreach (KeyValuePair<CombatGroup, GameObject> combatant in gameController.combatGroups)
