@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
-public class Inventory : IInventory {
+public class Inventory : MonoBehaviour, IInventory {
 
     public int SlotsX { get; set; }
     public int SlotsY { get; set; }
@@ -33,7 +33,9 @@ public class Inventory : IInventory {
         }
 
         player = GameObject.Find("Player");
+
         database = GameObject.FindGameObjectWithTag("Item Database").GetComponent<ItemDatabase>();
+        Debug.Log(database.Items.FirstOrDefault());
 
         // Add all items we have to the inventory
         foreach (var x in database.Items)

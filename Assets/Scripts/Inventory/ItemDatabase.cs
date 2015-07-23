@@ -2,9 +2,9 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class ItemDatabase : IItemDatabase {
+public class ItemDatabase: MonoBehaviour {
 
-    public List<Item> Items { get; private set; }
+    public List<Item> Items = new List<Item>();
 
     void Start()
     {
