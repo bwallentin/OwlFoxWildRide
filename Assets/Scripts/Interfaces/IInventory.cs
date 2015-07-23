@@ -3,9 +3,9 @@ using System.Collections;
 
 public interface IInventory {
     
-    int SlotsX { get; set; }
-    int SlotsY { get; set; }
-    GUISkin Skin { get; set; }
+    //int SlotsX { get; set; }
+    //int SlotsY { get; set; }
+    //GUISkin Skin { get; set; }
 
     // Add an item to the inventory. Using the ItemID given in the Item Database
     void AddItem(int id);

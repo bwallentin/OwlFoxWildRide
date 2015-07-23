@@ -5,9 +5,9 @@ using System.Linq;
 
 public class Inventory : MonoBehaviour, IInventory {
 
-    public int SlotsX { get; set; }
-    public int SlotsY { get; set; }
-    public GUISkin Skin { get; set; }
+    public int SlotsX;
+    public int SlotsY;
+    public GUISkin Skin;
 
     private List<Item> inventory;
     private List<Item> slots;
