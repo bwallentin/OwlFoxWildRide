@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
+using System.Linq;
 
 public class TurnState : IBattleState {
 
@@ -61,7 +62,6 @@ public class TurnState : IBattleState {
     {
         if (!waitingForAction) 
         {
-            // Determine who's turn it is
             actor = NextOf(combatants, actor);
             IHealth<int> actorHealth = actor.GetComponent<IHealth<int>>();
 
