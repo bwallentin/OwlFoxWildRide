@@ -10,16 +10,13 @@ public abstract class Actor : MonoBehaviour {
     public int startingHealth = 100;
 
     // Our actors level
-    public int level;
+    public float speed;
 
     // Default offset on the Y axis for the health panel
     public float healthPanelOffset = 0.35f;
 
     // Our current health
     public int currentHealth;
-
-    // Determines if we're an NPC
-    public bool isNPC;
 
     // The canvas we're drawing our health bar on
     public Canvas canvas;
@@ -32,15 +29,6 @@ public abstract class Actor : MonoBehaviour {
 
     // The actual health bar
     protected Slider healthSlider;
-
-    // Determines if we're dead or not
-    protected bool isDead;
-
-    // If we're damaged, we'll animate accordingly
-    protected bool damaged;
-
-    // We'll force every actor to implement the die function
-    protected abstract void Die();
 
     public virtual void Start()
     {
@@ -57,6 +45,9 @@ public abstract class Actor : MonoBehaviour {
 
         Text healthPanelName = healthPanel.GetComponentInChildren<Text>();
         healthPanelName.text = actorName;
+
+        // we'll hide this for now, and show it in combat
+        SetHealthPanelActive(false);
     }
 
     protected void UpdateHealthBarPosition()
@@ -64,5 +55,10 @@ public abstract class Actor : MonoBehaviour {
         Vector3 worldPos = new Vector3(transform.position.x, transform.position.y + healthPanelOffset, transform.position.z);
         Vector3 screenPos = Camera.main.WorldToScreenPoint(worldPos);
         healthPanel.transform.position = screenPos;
+    }
+
+    public void SetHealthPanelActive(bool isActive)
+    {
+        healthPanel.SetActive(isActive);
     }
 }

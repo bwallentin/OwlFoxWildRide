@@ -1,20 +1,26 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
-public class EnemyHealth : Actor
+public class EnemyHealth : Actor, IHealth<int>
 {
+    // Determines if we're dead or not
+    public bool IsDead { get; private set; }
+
+    // If this is set on a frame, we'll play the damaged animation
+    public bool Damaged { get; private set; }
+
     public int expValue = 10;
 
     private Animator animator;
-    private ParticleSystem hitParticles;
     private CapsuleCollider capsuleCollider;
+    private IDetectCombat detectCombat;
 
     public override void Awake()
     {
         base.Awake();
         animator = GetComponent<Animator>();
-        hitParticles = GetComponentInChildren<ParticleSystem>();
         capsuleCollider = GetComponent<CapsuleCollider>();
+        detectCombat = GetComponent<IDetectCombat>();
     }
 
     void Update()
@@ -24,29 +30,26 @@ public class EnemyHealth : Actor
 
     public void TakeDamage(int amount)
     {
-        if (isDead)
-        {
-            return;
-        }
-
         currentHealth -= amount;
-        healthSlider.value = currentHealth;
+        healthSlider.value = currentHealth / (float)startingHealth;
 
-        hitParticles.Play();
+        Debug.Log("Enemy taking " + amount + " damage, current health is " + currentHealth);
 
-        if (currentHealth <= 0)
+        if (currentHealth <= 0 && !IsDead)
         {
             Die();
         }
     }
 
-    protected override void Die()
+    public void Die()
     {
-        isDead = true;
+        IsDead = true;
 
         // remove obstacle by setting it to a trigger
         capsuleCollider.isTrigger = true;
 
+        detectCombat.DetectEnemies = false;
+   
         animator.SetTrigger("Dead");
 
         // Destroy game object after 2 sec
