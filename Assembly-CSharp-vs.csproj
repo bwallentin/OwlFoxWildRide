@@ -65,6 +65,9 @@
      <Compile Include="Assets\Scripts\Interfaces\IHealth.cs" />
      <Compile Include="Assets\Scripts\Interfaces\IMovable.cs" />
      <Compile Include="Assets\Scripts\Interfaces\IState.cs" />
+     <Compile Include="Assets\Scripts\Inventory\Inventory.cs" />
+     <Compile Include="Assets\Scripts\Inventory\Item.cs" />
+     <Compile Include="Assets\Scripts\Inventory\ItemDatabase.cs" />
      <Compile Include="Assets\Scripts\StateMachines\Battle\BattleStateMachine.cs" />
      <Compile Include="Assets\Scripts\StateMachines\Battle\States\ExecuteState.cs" />
      <Compile Include="Assets\Scripts\StateMachines\Battle\States\LootState.cs" />

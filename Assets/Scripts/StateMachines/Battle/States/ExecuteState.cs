@@ -26,19 +26,17 @@ public class ExecuteState : IBattleState
         if (Time.time >= (executionStart + action.ExecutionTime))
         {
             bsm.Change(BattleState.Turn);
+            return;
         }
 
         if(!inProgress)
         {
             inProgress = true;
 
-            // Time the Execution began
-            executionStart = Time.time;
-
             // TODO: Start attack animation for actor
             //Animator actorAnimator = action.Actor.GetComponent<Animator>();
             
-            // Let the target take damage
+            // TODO: Fix so the target takes damage somwwhere in the animation
             IHealth<int> targetHealth = action.Target.GetComponent<IHealth<int>>();
             targetHealth.TakeDamage(20);
         }
@@ -47,6 +45,9 @@ public class ExecuteState : IBattleState
     public void OnEnter(IAction executable)
     {
         action = executable;
+        
+        // Time the Execution began
+        executionStart = Time.time;  
     }
 
     public void OnExit()
