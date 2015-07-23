@@ -2,14 +2,14 @@
 using System.Collections;
 
 [System.Serializable]
-public class Item {
-    
-    public string ItemName;
-    public int ItemID;
-    public string ItemDescription;
-    public Texture2D ItemIcon;
-    public int ItemPower;
-    public int ItemSpeed;
+public class Item : IItem {
+
+    public int ItemID { get; set; }
+    public string ItemName { get; set; }
+    public string ItemDescription { get; set; }
+    public Texture2D ItemIcon { get; set; }
+    public int ItemPower { get; set; }
+    public int ItemSpeed { get; set; }
     public ItemTypes ItemType;
 
     public enum ItemTypes

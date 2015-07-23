@@ -63,6 +63,9 @@
      <Compile Include="Assets\Scripts\Interfaces\IDecision.cs" />
      <Compile Include="Assets\Scripts\Interfaces\IDetectCombat.cs" />
      <Compile Include="Assets\Scripts\Interfaces\IHealth.cs" />
+     <Compile Include="Assets\Scripts\Interfaces\IInventory.cs" />
+     <Compile Include="Assets\Scripts\Interfaces\IItem.cs" />
+     <Compile Include="Assets\Scripts\Interfaces\IItemDatabase.cs" />
      <Compile Include="Assets\Scripts\Interfaces\IMovable.cs" />
      <Compile Include="Assets\Scripts\Interfaces\IState.cs" />
      <Compile Include="Assets\Scripts\Inventory\Inventory.cs" />

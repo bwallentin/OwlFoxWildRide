@@ -3,13 +3,14 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
-public class Inventory : MonoBehaviour {
+public class Inventory : IInventory {
 
-    public int slotsX, slotsY;
-    public GUISkin skin;
-    public List<Item> inventory = new List<Item>();
-    public List<Item> slots = new List<Item>();
+    public int SlotsX { get; set; }
+    public int SlotsY { get; set; }
+    public GUISkin Skin { get; set; }
 
+    private List<Item> inventory;
+    private List<Item> slots;
     private bool showInventory;
     private ItemDatabase database;
     private bool showToolTip = false;
@@ -22,7 +23,10 @@ public class Inventory : MonoBehaviour {
 	// Use this for initialization
 	void Start () 
     {
-        for (int i = 0; i < (slotsX * slotsY); i++)
+        inventory = new List<Item>();
+        slots = new List<Item>();
+
+        for (int i = 0; i < (SlotsX * SlotsY); i++)
         {
             slots.Add(new Item());
             inventory.Add(new Item());
@@ -32,7 +36,7 @@ public class Inventory : MonoBehaviour {
         database = GameObject.FindGameObjectWithTag("Item Database").GetComponent<ItemDatabase>();
 
         // Add all items we have to the inventory
-        foreach (var x in database.items)
+        foreach (var x in database.Items)
             AddItem(x.ItemID);
 	}
 
@@ -49,18 +53,18 @@ public class Inventory : MonoBehaviour {
     /// Add an item to the inventory. Using the ItemID given in the Item Database
     /// </summary>
     /// <param name="id"></param>
-    void AddItem(int id)
+    public void AddItem(int id)
     {
         //TODO: Snygga till den här koden
         for (int i = 0; i < inventory.Count; i++)
         {
             if (inventory[i].ItemName == null)
             {
-                for (int j = 0; j < database.items.Count; j++)
+                for (int j = 0; j < database.Items.Count; j++)
                 {
-                    if (database.items[j].ItemID == id)
+                    if (database.Items[j].ItemID == id)
                     {
-                        inventory[i] = database.items[j];
+                        inventory[i] = database.Items[j];
                     }
                 }
                 break;
@@ -72,7 +76,7 @@ public class Inventory : MonoBehaviour {
     /// Removes the first item given an ID from the inventory
     /// </summary>
     /// <param name="id"></param>
-    void RemoveItem(int id)
+    public void RemoveItem(int id)
     {
         var item = inventory.FirstOrDefault(s => s.ItemID == id);
 
@@ -88,7 +92,7 @@ public class Inventory : MonoBehaviour {
     /// </summary>
     /// <param name="id"></param>
     /// <returns></returns>
-    bool InventoryContains(int id)
+    public bool InventoryContains(int id)
     {
         return inventory.Any(x => x.ItemID == id);
     }
@@ -96,14 +100,14 @@ public class Inventory : MonoBehaviour {
     void OnGUI()
     {
         toolTip = "";
-        GUI.skin = skin;
+        GUI.skin = Skin;
 
         if (showInventory)
         {
             DrawInventory();
 
             if (showToolTip)
-                GUI.Box(new Rect(Event.current.mousePosition.x + 15f, Event.current.mousePosition.y, 200, 200), toolTip, skin.GetStyle("Tooltip"));
+                GUI.Box(new Rect(Event.current.mousePosition.x + 15f, Event.current.mousePosition.y, 200, 200), toolTip, Skin.GetStyle("Tooltip"));
         }
 
         if(draggingItem)
@@ -113,16 +117,16 @@ public class Inventory : MonoBehaviour {
     /// <summary>
     /// Draw all the shit on the screen for the Inventory
     /// </summary>
-    void DrawInventory()
+    public void DrawInventory()
     {
         Event currentEvent = Event.current;
         int i = 0;
-        for (int y = 0; y < slotsY; y++)
+        for (int y = 0; y < SlotsY; y++)
         {
-            for (int x = 0; x < slotsX; x++)
+            for (int x = 0; x < SlotsX; x++)
             {
                 Rect currentRectangle = new Rect(x * 60, y * 60, 50, 50);
-                GUI.Box(currentRectangle, "", skin.GetStyle("Slot"));
+                GUI.Box(currentRectangle, "", Skin.GetStyle("Slot"));
                 slots[i] = inventory[i];
                 Item item = slots[i];
 
@@ -190,7 +194,7 @@ public class Inventory : MonoBehaviour {
     }
     
     // Use a consumable item in the inventory
-    void UseConsumable(Item item, int slot, bool deleteItem)
+    public void UseConsumable(Item item, int slot, bool deleteItem)
     {
         switch (item.ItemID)
         {
@@ -209,21 +213,32 @@ public class Inventory : MonoBehaviour {
             inventory[slot] = new Item();
     }
 
-    string CreateToolTip(Item item)
+    /// <summary>
+    /// Create the tooltip on the GUI, no shit captain obvious
+    /// </summary>
+    /// <param name="item"></param>
+    /// <returns></returns>
+    public string CreateToolTip(Item item)
     {
         toolTip = "<color=#4DA4BF>" + item.ItemName + "</color>\n\n" + "<color=#F2F2F2>" + item.ItemDescription + "</color>";
         return toolTip;
     }
 
+    /// <summary>
+    /// Used so the inventory is not resetted all the fking time. This needs some work so it's functioning properly
+    /// </summary>
     void SaveInventory()
     {
         for (int i = 0; i < inventory.Count; i++)
             PlayerPrefs.SetInt("Inventory " + i, inventory[i].ItemID);
     }
 
+    /// <summary>
+    /// Same shit as SaveInventory, fixing so the inventory doesn't reset all the time
+    /// </summary>
     void LoadInventory()
     {
         for (int i = 0; i < inventory.Count; i++)
-            inventory[i] = PlayerPrefs.GetInt("Inventory " + i, -1) >= 1 ? database.items[PlayerPrefs.GetInt("Inventory " + i)] : new Item();
+            inventory[i] = PlayerPrefs.GetInt("Inventory " + i, -1) >= 1 ? database.Items[PlayerPrefs.GetInt("Inventory " + i)] : new Item();
     }
 }
