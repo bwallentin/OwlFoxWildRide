@@ -34,6 +34,12 @@ public class PlayerHealth : Actor, IHealth<int>
         Damaged = false;
     }
 
+    public void IncreaseHealth(int amount)
+    {
+        currentHealth += amount;
+        healthSlider.value = currentHealth / (float)startingHealth;
+    }
+
     public void TakeDamage(int amount)
     {
         Damaged = true;
