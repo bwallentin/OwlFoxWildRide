@@ -1,28 +1,37 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class PlayerHealth : Actor
+public class PlayerHealth : Actor, IHealth<int>
 {
+    // Determines if we're dead or not
+    public bool IsDead { get; private set; }
+
+    // If this is set on a frame, we'll play the damaged animation
+    public bool Damaged { get; private set; }
+
+    // Responsible for all the animations
     private Animator animator;
-    private PlayerMovement playerMovement;
+
+    // Reference to the players movement
+    private IMovable playerMovement;
 
     public override void Awake()
     {
         base.Awake();
         animator = GetComponent<Animator>();
-        playerMovement = GetComponent<PlayerMovement>();
+        playerMovement = GetComponent<IMovable>();
     }
 
     void Update()
     {
         UpdateHealthBarPosition();
 
-        if (damaged)
+        if (Damaged)
         {
             // TODO: play damaged animation
         }
 
-        damaged = false;
+        Damaged = false;
     }
 
     public void IncreaseHealth(int amount)
@@ -33,27 +42,26 @@ public class PlayerHealth : Actor
 
     public void TakeDamage(int amount)
     {
-        damaged = true;
+        Damaged = true;
 
         currentHealth -= amount;
         healthSlider.value = currentHealth / (float)startingHealth;
 
-        if (currentHealth <= 0 && !isDead)
+        Debug.Log("Player taking " + amount + " damage, current health is " + currentHealth);
+
+        if (currentHealth <= 0 && !IsDead)
         {
             Die();
         }
     }
 
-    protected override void Die()
+    public void Die()
     {
-        isDead = true;
+        IsDead = true;
 
         animator.SetTrigger("Die");
 
-        // Stop moving
-        playerMovement.Stop();
-
         // disable movement when dead
-        playerMovement.enabled = false;
+        playerMovement.IsMovable(false);
     }
 }

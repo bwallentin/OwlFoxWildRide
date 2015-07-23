@@ -1,12 +1,21 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class PlayerMovement : MonoBehaviour
+public class PlayerMovement : MonoBehaviour, IMovable
 {
+    // Controlling our objects animations
     private Animator animator;
+
+    // Responsible for moving the object along the nav mesh
     private NavMeshAgent agent;
+
+    // Our rigid body, allowing us to interact with physics
     private Rigidbody rb;
+
+    // The length our camera will cast ray
     private float camRaylength = 100f;
+
+    // The layer our navigation mesh resides on
     private int navMask;
 
     void Awake()
@@ -59,8 +68,19 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    public void Stop()
+    public void IsMovable(bool isMovable)
     {
+       
+        // stop the agent from moving anymore
         agent.Stop();
+
+        // release the current path
+        agent.ResetPath();
+
+        // Reset animation to idle
+        animator.SetBool("IsWalking", false);
+
+        // disable further click to move instructions
+        this.enabled = isMovable;
     }
 }
