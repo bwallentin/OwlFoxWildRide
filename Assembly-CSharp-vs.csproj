@@ -48,18 +48,41 @@
   <ItemGroup>
      <Compile Include="Assets\Scripts\Actors\Actor.cs" />
      <Compile Include="Assets\Scripts\Actors\Enemy\EnemyAttack.cs" />
+     <Compile Include="Assets\Scripts\Actors\Enemy\EnemyDetectCombat.cs" />
      <Compile Include="Assets\Scripts\Actors\Enemy\EnemyHealth.cs" />
+     <Compile Include="Assets\Scripts\Actors\Player\PlayerDetectCombat.cs" />
      <Compile Include="Assets\Scripts\Actors\Player\PlayerHealth.cs" />
      <Compile Include="Assets\Scripts\Actors\Player\PlayerMovement.cs" />
      <Compile Include="Assets\Scripts\Camera\CameraFollow.cs" />
-     <Compile Include="Assets\Scripts\Inventory\Inventory.cs" />
-     <Compile Include="Assets\Scripts\Inventory\Item.cs" />
-     <Compile Include="Assets\Scripts\Inventory\ItemDatabase.cs" />
+     <Compile Include="Assets\Scripts\Combat\Actions\Attack\Attack.cs" />
+     <Compile Include="Assets\Scripts\Combat\Decisions\AIDecision.cs" />
+     <Compile Include="Assets\Scripts\Combat\Decisions\PlayerDecision.cs" />
+     <Compile Include="Assets\Scripts\Controllers\GameController.cs" />
+     <Compile Include="Assets\Scripts\Interfaces\IAction.cs" />
+     <Compile Include="Assets\Scripts\Interfaces\IBattleState.cs" />
+     <Compile Include="Assets\Scripts\Interfaces\IDecision.cs" />
+     <Compile Include="Assets\Scripts\Interfaces\IDetectCombat.cs" />
+     <Compile Include="Assets\Scripts\Interfaces\IHealth.cs" />
+     <Compile Include="Assets\Scripts\Interfaces\IMovable.cs" />
+     <Compile Include="Assets\Scripts\Interfaces\IState.cs" />
+     <Compile Include="Assets\Scripts\StateMachines\Battle\BattleStateMachine.cs" />
+     <Compile Include="Assets\Scripts\StateMachines\Battle\States\ExecuteState.cs" />
+     <Compile Include="Assets\Scripts\StateMachines\Battle\States\LootState.cs" />
+     <Compile Include="Assets\Scripts\StateMachines\Battle\States\TurnState.cs" />
+     <Compile Include="Assets\Scripts\StateMachines\Game\GameStateMachine.cs" />
+     <Compile Include="Assets\Scripts\StateMachines\Game\States\CombatState.cs" />
+     <Compile Include="Assets\Scripts\StateMachines\Game\States\RoamingState.cs" />
  <Reference Include="UnityEngine.UI">
  <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
  </Reference>
+ <Reference Include="UnityEngine.Networking">
+ <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/Networking/UnityEngine.Networking.dll</HintPath>
+ </Reference>
+ <Reference Include="UnityEngine.Analytics">
+ <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/UnityAnalytics/UnityEngine.Analytics.dll</HintPath>
+ </Reference>
  <Reference Include="UnityEditor.iOS.Extensions.Xcode">
- <HintPath>C:/Program Files/Unity/Editor/Data/PlaybackEngines/iossupport/UnityEditor.iOS.Extensions.Xcode.dll</HintPath>
+ <HintPath>C:/Program Files/Unity/Editor/Data/PlaybackEngines/iOSSupport/UnityEditor.iOS.Extensions.Xcode.dll</HintPath>
  </Reference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
