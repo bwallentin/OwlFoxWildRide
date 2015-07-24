@@ -35,7 +35,6 @@ public class Inventory : MonoBehaviour, IInventory {
         player = GameObject.Find("Player");
 
         database = GameObject.FindGameObjectWithTag("Item Database").GetComponent<ItemDatabase>();
-        Debug.Log(database.Items.FirstOrDefault());
 
         // Add all items we have to the inventory
         foreach (var x in database.Items)
@@ -123,9 +122,11 @@ public class Inventory : MonoBehaviour, IInventory {
     {
         Event currentEvent = Event.current;
         int i = 0;
-        for (int y = 0; y < SlotsY; y++)
+
+        #region DrawInventory
+        for (int y = 1; y <= SlotsY; y++)
         {
-            for (int x = 0; x < SlotsX; x++)
+            for (int x = 1; x <= SlotsX; x++)
             {
                 Rect currentRectangle = new Rect(x * 60, y * 60, 50, 50);
                 GUI.Box(currentRectangle, "", Skin.GetStyle("Slot"));
@@ -193,6 +194,7 @@ public class Inventory : MonoBehaviour, IInventory {
                 i++;
             }
         }
+        #endregion
     }
     
     // Use a consumable item in the inventory
