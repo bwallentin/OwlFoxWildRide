@@ -46,8 +46,8 @@
 	</Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\Scripts\Actors\AbilityList.cs" />
      <Compile Include="Assets\Scripts\Actors\Actor.cs" />
-     <Compile Include="Assets\Scripts\Actors\Enemy\EnemyAttack.cs" />
      <Compile Include="Assets\Scripts\Actors\Enemy\EnemyDetectCombat.cs" />
      <Compile Include="Assets\Scripts\Actors\Enemy\EnemyHealth.cs" />
      <Compile Include="Assets\Scripts\Actors\Player\PlayerDetectCombat.cs" />
@@ -55,10 +55,12 @@
      <Compile Include="Assets\Scripts\Actors\Player\PlayerMovement.cs" />
      <Compile Include="Assets\Scripts\Actors\Player\PlayerStats.cs" />
      <Compile Include="Assets\Scripts\Camera\CameraFollow.cs" />
-     <Compile Include="Assets\Scripts\Combat\Actions\Attack\Attack.cs" />
+     <Compile Include="Assets\Scripts\Combat\Ability.cs" />
+     <Compile Include="Assets\Scripts\Combat\Action.cs" />
      <Compile Include="Assets\Scripts\Combat\Decisions\AIDecision.cs" />
      <Compile Include="Assets\Scripts\Combat\Decisions\PlayerDecision.cs" />
      <Compile Include="Assets\Scripts\Controllers\GameController.cs" />
+     <Compile Include="Assets\Scripts\HUD\DefaultActionButton.cs" />
      <Compile Include="Assets\Scripts\Interfaces\IAction.cs" />
      <Compile Include="Assets\Scripts\Interfaces\IBattleState.cs" />
      <Compile Include="Assets\Scripts\Interfaces\IDecision.cs" />
@@ -73,6 +75,7 @@
      <Compile Include="Assets\Scripts\Inventory\Inventory.cs" />
      <Compile Include="Assets\Scripts\Inventory\Item.cs" />
      <Compile Include="Assets\Scripts\Inventory\ItemDatabase.cs" />
+     <Compile Include="Assets\Scripts\Inventory\ItemStats.cs" />
      <Compile Include="Assets\Scripts\StateMachines\Battle\BattleStateMachine.cs" />
      <Compile Include="Assets\Scripts\StateMachines\Battle\States\ExecuteState.cs" />
      <Compile Include="Assets\Scripts\StateMachines\Battle\States\LootState.cs" />
