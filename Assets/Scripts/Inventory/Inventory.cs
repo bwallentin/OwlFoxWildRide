@@ -5,8 +5,6 @@ using System.Linq;
 
 public class Inventory : MonoBehaviour, IInventory {
 
-    public int rowCount;
-    public int colCount;
     public GUISkin Skin;
 
     // Inventory
@@ -25,7 +23,8 @@ public class Inventory : MonoBehaviour, IInventory {
     private List<Item> charSlots;
 
     private GameObject player;
-
+    private int rowCount = 4;
+    private int colCount = 4;
 
 
 	// Use this for initialization
@@ -418,7 +417,21 @@ public class Inventory : MonoBehaviour, IInventory {
     /// <returns></returns>
     public string CreateToolTip(Item item)
     {
-        toolTip = "<color=#4DA4BF>" + item.ItemName + "</color>\n\n" + "<color=#F2F2F2>" + item.ItemDescription + "</color>";
+        if (item.ItemType != Item.ItemTypes.Consumable && item.ItemType != Item.ItemTypes.Quest && item.ItemType != Item.ItemTypes.Usable)
+        {
+            toolTip = "<color=#4DA4BF>" + item.ItemName + "</color>" + "\n\n" +
+                      "<color=#F2F2F2>" + item.ItemDescription + "</color>" + "\n\n" +
+                      "<color=#F2F2F2>" + "Armor: " + item.ItemStats.Armor + "</color>" + "\n" +
+                      "<color=#F2F2F2>" + "BaseDamage: " + item.ItemStats.BaseDamage + "</color>" + "\n" +
+                      "<color=#F2F2F2>" + "Dodge: " + item.ItemStats.Dodge + "</color>" + "\n" +
+                      "<color=#F2F2F2>" + "HitRating: " + item.ItemStats.HitRating + "</color>" + "\n" +
+                      "<color=#F2F2F2>" + "Resist: " + item.ItemStats.Resist + "</color>" + "\n";
+        }
+        else
+        {
+            toolTip = "<color=#4DA4BF>" + item.ItemName + "</color>" + "\n\n" +
+                      "<color=#F2F2F2>" + item.ItemDescription + "</color>";
+        }
         return toolTip;
     }
 
