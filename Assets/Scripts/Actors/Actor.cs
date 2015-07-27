@@ -19,7 +19,7 @@ public abstract class Actor : MonoBehaviour {
     public int currentHealth;
 
     // The canvas we're drawing our health bar on
-    public Canvas canvas;
+    public GameObject HudHealthBars;
 
     // The GUI Health bar
     public GameObject healthPrefab;
@@ -38,9 +38,8 @@ public abstract class Actor : MonoBehaviour {
     public virtual void Awake()
     {
         currentHealth = startingHealth;
-
         healthPanel = Instantiate(healthPrefab) as GameObject;
-        healthPanel.transform.SetParent(canvas.transform, false);
+        healthPanel.transform.SetParent(HudHealthBars.transform, false);
         healthSlider = healthPanel.GetComponentInChildren<Slider>();
 
         Text healthPanelName = healthPanel.GetComponentInChildren<Text>();

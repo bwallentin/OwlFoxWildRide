@@ -13,9 +13,14 @@ public class AIDecision : IDecision
     {
         // TODO: Add target picking for AI
 
-        // Default action to Attack on the first target avaiable
-        Action = new Attack(actor, targets[0]);
+        // TODO: Implement real abilities instead of using the first one
+        AbilityList abilityList = actor.GetComponent<AbilityList>();
+        Action = new Action(actor, targets[0], abilityList.abilities[0]);
 
         IsReady = true;
+    }
+
+    public void Update()
+    {
     }
 }

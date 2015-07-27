@@ -89,6 +89,11 @@ public class TurnState : IBattleState {
         {
             bsm.Change(BattleState.Execute, decision.Action);
         }
+        else
+        {
+            // We're not done deciding yet, go update
+            decision.Update();
+        }
     }
 
     public void OnEnter(IAction action = null)

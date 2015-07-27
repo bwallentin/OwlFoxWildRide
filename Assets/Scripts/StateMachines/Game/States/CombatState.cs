@@ -28,6 +28,8 @@ public class CombatState : IState
 
     private void SetCombatReadiness(bool state)
     {
+        //TODO: Set the right state for the Combat HUD
+
         actors.ForEach(delegate (GameObject entity)
         {
             // Set the health panel to active for all entities in the battle
