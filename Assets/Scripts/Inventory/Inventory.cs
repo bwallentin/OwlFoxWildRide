@@ -5,8 +5,8 @@ using System.Linq;
 
 public class Inventory : MonoBehaviour, IInventory {
 
-    public int SlotsX;
-    public int SlotsY;
+    public int rowCount;
+    public int colCount;
     public GUISkin Skin;
 
     private List<Item> inventory;
@@ -17,8 +17,10 @@ public class Inventory : MonoBehaviour, IInventory {
     private string toolTip;
     private bool draggingItem = false;
     private Item draggedItem;
-    private int prevIndex;
+    private int draggedIndex;
     private GameObject player;
+
+    private int slotSize = 50;
 
 	// Use this for initialization
 	void Start () 
@@ -26,16 +28,15 @@ public class Inventory : MonoBehaviour, IInventory {
         inventory = new List<Item>();
         slots = new List<Item>();
 
-        for (int i = 0; i < (SlotsX * SlotsY); i++)
+        for (int i = 0; i < (rowCount * colCount); i++)
         {
             slots.Add(new Item());
             inventory.Add(new Item());
         }
 
+        //showInventory = false;
         player = GameObject.Find("Player");
-
         database = GameObject.FindGameObjectWithTag("Item Database").GetComponent<ItemDatabase>();
-        Debug.Log(database.Items.FirstOrDefault());
 
         // Add all items we have to the inventory
         foreach (var x in database.Items)
@@ -83,10 +84,8 @@ public class Inventory : MonoBehaviour, IInventory {
         var item = inventory.FirstOrDefault(s => s.ItemID == id);
 
         if (item != null)
-        {
             if (item.ItemID == -1)
                 inventory[item.ItemID] = new Item();
-        }
     }
 
     /// <summary>
@@ -123,50 +122,60 @@ public class Inventory : MonoBehaviour, IInventory {
     {
         Event currentEvent = Event.current;
         int i = 0;
-        for (int y = 0; y < SlotsY; y++)
+        for (int y = 0; y < colCount; y++)
         {
-            for (int x = 0; x < SlotsX; x++)
+            for (int x = 0; x < rowCount; x++)
             {
                 Rect currentRectangle = new Rect(x * 60, y * 60, 50, 50);
                 GUI.Box(currentRectangle, "", Skin.GetStyle("Slot"));
                 slots[i] = inventory[i];
                 Item item = slots[i];
 
-                // ItemName will be null if it doesn't exist
+                // Check to see if the slot has an item in it
+                // We do this with itemName as all slots have an instance of item, just not any item information
                 if (slots[i].ItemName != null)
                 {
-                    // If there is an item, let's draw the items icon withing that inventory slot
+                    // If there is an item, let's draw the items icon within that slot
                     GUI.DrawTexture(currentRectangle, slots[i].ItemIcon);
 
+                    // Now lets check to see if the mouses position is withing the items slot
                     if (currentRectangle.Contains(currentEvent.mousePosition))
                     {
                         // Create a tooltip for the item we are hovering over
                         toolTip = CreateToolTip(slots[i]);
                         showToolTip = true;
 
-                        // Item being dragged around in the inventory
+                        // Here we're going to check to see if the left-mouse-button was clicked on an item and then dragged 
+                        // We also make sure we're not already dragging an item
                         if (currentEvent.button == 0 && currentEvent.type == EventType.mouseDrag && !draggingItem)
                         {
+                            // If we start dragging, set dragging to true and set the dragged item to the item in that slot.
+                            // Empty the slot we dragged from (making it an empty slot) and make sure we keep a record of the slot we dragged that item from.
                             draggingItem = true;
                             draggedItem = item;
                             inventory[i] = new Item(); //Empty inventory slot
-                            prevIndex = i;
+                            draggedIndex = i;
                         }
 
-                        // Item is being dropped in the inventory
+                        // Now let's check to see if we released mouse button while dragging an item
                         if (currentEvent.type == EventType.mouseUp && draggingItem)
                         {
-                            inventory[prevIndex] = item;
+                            // If so, we'll make that slots item equal to the item we were dragging
+                            // Also need to set the slot we dragged FROM to have the item in the slot we dropped the item on
+                            // Then set that we are not dragging an item anymore and the dragged item to be empty
+                            inventory[draggedIndex] = item;
                             inventory[i] = draggedItem; //Change location of the item
                             draggingItem = false;
                             draggedItem = null;
                         }
 
-                        // If we rightclick on an item in the inventory
+                        // If we right-click on the item we are hovering
                         if (currentEvent.isMouse && currentEvent.type == EventType.mouseDown && currentEvent.button == 1)
                         {
+                            // Is the item an consumable?
                             if (item.ItemType == Item.ItemTypes.Consumable)
                             {
+                                // Use dat consumable yo!
                                 UseConsumable(item, i, true);
                             }
                         }
@@ -189,12 +198,12 @@ public class Inventory : MonoBehaviour, IInventory {
                 // Hide tooltip
                 if (toolTip == "")
                     showToolTip = false;
-
+                
                 i++;
             }
         }
     }
-    
+
     // Use a consumable item in the inventory
     public void UseConsumable(Item item, int slot, bool deleteItem)
     {
