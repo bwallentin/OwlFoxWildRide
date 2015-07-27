@@ -18,10 +18,6 @@ public class PlayerDetectCombat : MonoBehaviour, IDetectCombat {
         {
             gameController = gameControllerObject.GetComponent<GameController>();
         }
-        else
-        {
-            Debug.Log("Can't find Game Controller");
-        }
     }
 
     void OnTriggerEnter(Collider other)

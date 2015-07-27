@@ -36,7 +36,6 @@ public class Inventory : MonoBehaviour, IInventory {
 
         database = GameObject.FindGameObjectWithTag("Item Database").GetComponent<ItemDatabase>();
         Debug.Log(database.Items.FirstOrDefault());
-
         // Add all items we have to the inventory
         foreach (var x in database.Items)
             AddItem(x.ItemID);
