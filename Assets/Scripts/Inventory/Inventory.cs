@@ -69,6 +69,11 @@ public class Inventory : MonoBehaviour, IInventory {
             GUI.DrawTexture(new Rect(Event.current.mousePosition.x, Event.current.mousePosition.y, 50, 50), draggedItem.ItemIcon);
     }
 
+    public List<Item> ReturnInventory()
+    {
+        return charInventory;
+    }
+
     private void InstantiateInventory()
     {
         // Inventory stuff
@@ -247,6 +252,10 @@ public class Inventory : MonoBehaviour, IInventory {
                                     charInventory[i] = draggedItem;
                                     break;
                             }
+
+                            // Update player stats when an item is equipped
+                            var playerStats = gameObject.AddComponent<PlayerStats>();
+                            playerStats.UpdatePlayerStatsByItem(charInventory);
 
                             draggingItem = false;
                             draggedItem = null;
