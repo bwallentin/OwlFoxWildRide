@@ -6,9 +6,10 @@ using System.Linq;
 public class Inventory : MonoBehaviour, IInventory {
 
     public GUISkin Skin;
+    public List<Item> charInventory { get; private  set; }
+    public List<Item> inventory { get; private set; }
 
     // Inventory
-    private List<Item> inventory;
     private List<Item> slots;
     private bool showInventory;
     private ItemDatabase database;
@@ -19,7 +20,6 @@ public class Inventory : MonoBehaviour, IInventory {
     private int draggedIndex;
 
     // Character inventory
-    private List<Item> charInventory;
     private List<Item> charSlots;
 
     private GameObject player;
