@@ -17,6 +17,9 @@ public interface IInventory {
     bool InventoryContains(int id);
 
     // Draw all the shit on the screen for the Inventory
+    void DrawCharacterInventory();
+
+    // Draw all the shit on the screen for the Inventory
     void DrawInventory();
 
     // Use a consumable item in the inventory
