@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections.Generic;
 
 
@@ -16,10 +17,14 @@ public class GameController : MonoBehaviour {
     // We'll use combat groups to decide if an actor has joined the party members or the enemy
     public Dictionary<CombatGroup, GameObject> combatGroups = new Dictionary<CombatGroup, GameObject>();
 
+    // The game state machnine, holding the state of the game
     private GameStateMachine gsm;
 
     void Awake()
     {
+        // We'll start by setting the combat HUD to inactive,
+        // we only want to show this in combat
+
         gsm = new GameStateMachine();
 
         gsm.Add(GameState.Roaming, new RoamingState());
@@ -35,7 +40,7 @@ public class GameController : MonoBehaviour {
             combatGroups.ContainsKey(CombatGroup.Enemy) &&
             !inCombat)
         {
-            InitiateCombat();
+           InitiateCombat();
         }
 
         gsm.Update();
@@ -44,6 +49,7 @@ public class GameController : MonoBehaviour {
     private void InitiateCombat()
     {
         inCombat = true;
+
         // Change State machine to combat
         gsm.Change(GameState.Combat);
     }

@@ -33,8 +33,6 @@ public class EnemyHealth : Actor, IHealth<int>
         currentHealth -= amount;
         healthSlider.value = currentHealth / (float)startingHealth;
 
-        Debug.Log("Enemy taking " + amount + " damage, current health is " + currentHealth);
-
         if (currentHealth <= 0 && !IsDead)
         {
             Die();

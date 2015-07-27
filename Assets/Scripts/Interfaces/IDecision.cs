@@ -2,4 +2,6 @@
 {
     bool IsReady { get; }
     IAction Action { get; }
+
+    void Update();
 }
