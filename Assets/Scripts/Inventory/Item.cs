@@ -17,11 +17,13 @@ public class Item : IItem {
         Weapon,
         Usable,
         Consumable,
-        Chest,
         Head,
+        Shoulder,
+        Chest,
         Gloves,
         Legs,
-        Shoes,
+        Feet,
+        Ring,
         Quest
     }
 
