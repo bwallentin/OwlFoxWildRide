@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class PlayerStats : MonoBehaviour, IPlayerStats {
 
@@ -15,17 +16,32 @@ public class PlayerStats : MonoBehaviour, IPlayerStats {
 
     private double baseMana;
 
-    public PlayerStats()
+    void Start()
     {
-        Armor = 0;
+        Armor = 10;
         Damage = 10;
         Crit = 0;
-        Dodge = 0;
-        Hit = 100;
+        Dodge = 10;
+        Hit = 0;
         Mana = CalculateBaseMana();
-        Resist = 0;
+        Resist = 10;
         Speed = 0;
         XP = 0;
+    }
+
+    public void UpdatePlayerStatsByItem(List<Item> items)
+    {
+        foreach (var item in items)
+        {
+            if (item.ItemName != null)
+            {
+                Armor = item.ItemStats.Armor;
+                Damage = item.ItemStats.BaseDamage;
+                Dodge = item.ItemStats.Dodge;
+                Hit = item.ItemStats.HitRating;
+                Resist = item.ItemStats.Resist;
+            }
+        }
     }
 
     public double CalculateBaseMana()

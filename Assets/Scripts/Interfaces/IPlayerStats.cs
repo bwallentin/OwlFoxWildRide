@@ -1,7 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public interface IPlayerStats {
+public interface IPlayerStats
+{
 
     int Armor { get; set; }
     int Damage { get; set; }
