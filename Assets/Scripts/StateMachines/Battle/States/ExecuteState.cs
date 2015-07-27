@@ -23,6 +23,7 @@ public class ExecuteState : IBattleState
     {
         // If the execution time of this action has passed,
         // e.g animations and everything is done, we'll execute the next turn
+
         if (Time.time >= (executionStart + action.ExecutionTime))
         {
             bsm.Change(BattleState.Turn);
@@ -38,7 +39,9 @@ public class ExecuteState : IBattleState
             
             // TODO: Fix so the target takes damage somwwhere in the animation
             IHealth<int> targetHealth = action.Target.GetComponent<IHealth<int>>();
-            targetHealth.TakeDamage(20);
+
+            Debug.Log(action.Actor.name + " used " + action.Ability.name + " on " +  action.Target.name + " for " + action.Ability.damage + " damage");
+            targetHealth.TakeDamage(action.Ability.damage);
         }
     }
 

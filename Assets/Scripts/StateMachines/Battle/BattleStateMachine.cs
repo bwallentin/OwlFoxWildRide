@@ -4,6 +4,7 @@ public enum BattleState
 {
     Turn = 0,
     Execute = 1,
+    Decision = 2,
     Loot = 3,
     Defeat = 4
 }
