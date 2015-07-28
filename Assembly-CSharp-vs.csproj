@@ -76,6 +76,7 @@
      <Compile Include="Assets\Scripts\Inventory\Item.cs" />
      <Compile Include="Assets\Scripts\Inventory\ItemDatabase.cs" />
      <Compile Include="Assets\Scripts\Inventory\ItemStats.cs" />
+     <Compile Include="Assets\Scripts\Main Menu\AudioVideo.cs" />
      <Compile Include="Assets\Scripts\Main Menu\MainMenu.cs" />
      <Compile Include="Assets\Scripts\StateMachines\Battle\BattleStateMachine.cs" />
      <Compile Include="Assets\Scripts\StateMachines\Battle\States\ExecuteState.cs" />

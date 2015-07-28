@@ -24,8 +24,6 @@ public class MainMenu : MonoBehaviour {
 
     void Start()
     {
-        //PlayerPrefs.DeleteAll();
-
         gameVolume = PlayerPrefs.GetFloat("Game Volume", gameVolume);
         gameFOV = PlayerPrefs.GetFloat("Game FOV", gameFOV);
 
@@ -38,7 +36,6 @@ public class MainMenu : MonoBehaviour {
             PlayerPrefs.SetFloat("Game Volume", gameVolume);
         }
 
-        /*
         if (PlayerPrefs.HasKey("Game FOV"))
         {
             GameCamera.fieldOfView = PlayerPrefs.GetFloat("Game FOV");
@@ -46,7 +43,7 @@ public class MainMenu : MonoBehaviour {
         else
         {
             PlayerPrefs.SetFloat("Game FOV", gameFOV);
-        }*/
+        }
     }
 
     void Update()
@@ -58,7 +55,7 @@ public class MainMenu : MonoBehaviour {
     {
         GUI.skin = GameSkin;
 
-        GUI.Label(new Rect(30, 75, 300, 25), gameTitle, "Menu Title");
+        GUI.Label(new Rect(10, 75, 300, 25), gameTitle, "Menu Title");
 
         FirstMenu();
         LoadGameMenu();
@@ -114,7 +111,7 @@ public class MainMenu : MonoBehaviour {
     {
         if (isNewGameMenu)
         {
-            GUI.Label(new Rect(10, Screen.height / 2 - 200, 200, 50), "New Game", "Sub Menu Title");
+            GUI.Label(new Rect(10, Screen.height / 2 - 150, 200, 50), "New Game", "Sub Menu Title");
 
             GUI.Label(new Rect(10, Screen.height / 2 - 100, 90, 25), "Player Name:");
             playerName = GUI.TextField(new Rect(100, Screen.height / 2 - 100, 200, 25), playerName);
@@ -147,7 +144,7 @@ public class MainMenu : MonoBehaviour {
     {
         if (isLoadGameMenu)
         {
-            GUI.Label(new Rect(10, Screen.height / 2 - 200, 200, 50), "Load Game", "Sub Menu Title");
+            GUI.Label(new Rect(10, Screen.height / 2 - 150, 200, 50), "Load Game", "Sub Menu Title");
             GUI.Box(new Rect(10, Screen.height / 2 - 100, Screen.width / 2 + 100, Screen.height - 450), "Choose Saved Game");
 
             if (PlayerPrefs.HasKey("Player Name"))
@@ -173,21 +170,20 @@ public class MainMenu : MonoBehaviour {
     {
         if (isSettingsMenu)
         {
-            GUI.Label(new Rect(10, Screen.height / 2 - 200, 200, 50), "Settings", "Sub Menu Title");
+            GUI.Label(new Rect(10, Screen.height / 2 - 150, 200, 50), "Settings", "Sub Menu Title");
 
             if (isAudioOptions == true || isGraphicsOptions == true)
             {
                 GUI.Box(new Rect(Screen.width / 2, 0, Screen.width / 2, Screen.height), "");
             }
-
-
+            
             if (GUI.Button(new Rect(10, Screen.height / 2 - 30, 150, 25), "Audio Settings"))
             {
                 isGraphicsOptions = false;
                 isAudioOptions = true;
             }
 
-            if (GUI.Button(new Rect(10, Screen.height / 2 - 30, 150, 25), "Graphic Settings"))
+            if (GUI.Button(new Rect(10, Screen.height / 2 - 65, 150, 25), "Graphic Settings"))
             {
                 isGraphicsOptions = true;
                 isAudioOptions = false;
@@ -200,9 +196,11 @@ public class MainMenu : MonoBehaviour {
     {
         if (isAudioOptions)
         {
-            GUI.Label(new Rect(Screen.width / 2 + 10, 30, 200, 25), "Game Volume");
+            GUI.Label(new Rect(Screen.width / 2 + 10, 10, 200, 50), "Audio", "Sub Menu Title");
+
+            GUI.Label(new Rect(Screen.width / 2 + 10, 115, 200, 25), "Game Volume");
             gameVolume = GUI.HorizontalSlider(new Rect(Screen.width / 2 + 10, 150, Screen.width / 2 - 55, 25), gameVolume, 0.0f, 1.0f);
-            GUI.Label(new Rect(Screen.width / 2 - 35, 145, 50, 25), "" + (System.Math.Round(gameVolume, 2)));
+            GUI.Label(new Rect(Screen.width - 35, 145, 50, 25), "" + (System.Math.Round(gameVolume, 2)));
             AudioListener.volume = gameVolume;
 
             if (GUI.Button(new Rect(Screen.width / 2 + 10, Screen.height - 35, 150, 25), "Apply"))
@@ -216,7 +214,9 @@ public class MainMenu : MonoBehaviour {
     {
         if (isGraphicsOptions)
         {
-            GUI.Label(new Rect(Screen.width / 2 + 10, 30, 200, 25), "Game FOV");
+            GUI.Label(new Rect(Screen.width / 2 + 10, 10, 200, 50), "Graphic", "Sub Menu Title");
+
+            GUI.Label(new Rect(Screen.width / 2 + 10, 115, 200, 25), "Game FOV");
             gameFOV = GUI.HorizontalSlider(new Rect(Screen.width / 2 + 10, 150, Screen.width / 2 - 55, 25), gameFOV, 40.0f, 100.0f);
             GUI.Label(new Rect(Screen.width / 2 - 35, 145, 50, 25), "" + (int)gameFOV);
             GameCamera.fieldOfView = gameFOV;
